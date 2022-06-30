@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
+import os,json
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.core.exceptions import ImproperlyConfigured
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -22,20 +24,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7cctp+kt67&^nw3z-(@xnrx+az)c6fx@!_zfk$11^f^w!9yfms'
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-def get_secret(setting):
-    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
-
-
-SECRET_KEY = get_secret("SECRET_KEY")
+# secret_file = os.path.join(BASE_DIR, 'secrets.json')
+# with open(secret_file) as f:
+#     secrets = json.loads(f.read())
+#
+# def get_secret(setting):
+#     """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+#     try:
+#         return secrets[setting]
+#     except KeyError:
+#         error_msg = "Set the {} environment variable".format(setting)
+#         raise ImproperlyConfigured(error_msg)
+#
+#
+# SECRET_KEY = get_secret("SECRET_KEY")
 
 
 
@@ -70,6 +72,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'poli.urls'
@@ -156,3 +160,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
+DEBUG=False

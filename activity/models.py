@@ -22,11 +22,10 @@ class Activity(models.Model):
   author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activities', default='1')
   profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, default='1')
   title = models.CharField(max_length=300, default='')
-  tag = models.ManyToManyField(Tag, blank=True)
+  tag = models.ManyToManyField(Tag, blank=True) #전체태그
   company = models.CharField(max_length=100, default='')
   apply_period = models.DateField(null=True, blank=True)
-  # field = models.CharField(max_length=300, blank=False, null=False, default='')
-  field=models.ManyToManyField(Field, blank=True)
+  field=models.ManyToManyField(Field, blank=True) #활동분야
   actperiod = models.DateField(null=True, blank=True)
   personnel = models.IntegerField(default=0)
   detail = models.TextField(max_length=1000, blank=False, null=False, default='')
