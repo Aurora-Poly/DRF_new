@@ -5,7 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from club.models import Club
-from club.permissions import IsOwnerOrReadOnly
+from club.permissions import CustomReadOnly
 from club.serializers import ClubSerializer
 
 class SetPagination(PageNumberPagination):
@@ -18,9 +18,9 @@ class ClubViewSet(viewsets.ModelViewSet):
   serializer_class = ClubSerializer
   pagination_class = SetPagination
   filter_backends=[DjangoFilterBackend, SearchFilter]
-  filterset_fields=['title','profile__name']
+  filterset_fields = ['title', 'profile__name', 'profile']
   search_fields = ['title']
- #permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+  permission_classes = [CustomReadOnly]
 
   def perform_create(self, serializer):
     serializer.save(author=self.request.user)

@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
   password2 = serializers.CharField(write_only=True, required= True)
 
   class Meta:
-    model = User
+    model = User=User
     fields = ('username', 'password', 'password2', 'email')
 
   def validate(self, data):
