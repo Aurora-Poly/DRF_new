@@ -9,9 +9,9 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Portfolio
-    fields = ("pk", 'profile', 'title', 'content', 'head_img', 'date')
+    fields = ("pk", 'profile', 'title', 'content', 'head_img', 'file_upload' ,'date')
 
 class PortfolioCreateSerializer(serializers.ModelSerializer):
   class Meta:
     model = Portfolio
-    fields = ('title', 'category', 'content', 'head_img', 'date')
+    fields = ('title', 'category', 'content', 'head_img', 'file_upload' , 'date')
