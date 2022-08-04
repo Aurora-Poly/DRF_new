@@ -104,12 +104,8 @@ WSGI_APPLICATION = 'poli.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'POLY',
-        'USER': 'root',
-        'PASSWORD': 'ujin32325*',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -166,7 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '15.164.212.79']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
