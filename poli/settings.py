@@ -172,4 +172,4 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
-DEBUG=False
+DEBUG=True
