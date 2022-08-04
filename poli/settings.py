@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os,json
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.exceptions import ImproperlyConfigured
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -102,8 +104,12 @@ WSGI_APPLICATION = 'poli.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'POLY',
+        'USER': 'root',
+        'PASSWORD': 'ujin32325*',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -160,8 +166,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '15.164.212.79']
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
-DEBUG=False
+DEBUG=True
