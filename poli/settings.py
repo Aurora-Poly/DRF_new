@@ -170,8 +170,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '15.164.212.79'
-,'.ap-northeast-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 '15.164.212.79',
+                 '.ap-northeast-2.compute.amazonaws.com']
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
