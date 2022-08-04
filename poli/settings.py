@@ -39,7 +39,9 @@ SECRET_KEY = 'django-insecure-7cctp+kt67&^nw3z-(@xnrx+az)c6fx@!_zfk$11^f^w!9yfms
 #
 #
 # SECRET_KEY = get_secret("SECRET_KEY")
+DEBUG = True
 
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -63,10 +65,12 @@ INSTALLED_APPS = [
     'contest',
     'resume',
     'volunteer',
+    'corsheaders',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +81,10 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
+
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
+CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'poli.urls'
 
