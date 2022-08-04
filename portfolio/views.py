@@ -32,7 +32,6 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     else:
       return Portfolio.objects.none()
 
-
   def get_serializer_class(self):
     if self.action == 'list' or 'retrieve':
       return PortfolioSerializer

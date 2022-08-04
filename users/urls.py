@@ -6,5 +6,6 @@ urlpatterns = [
   #path('login/', LoginView.as_view()),
   path('profile/<int:pk>/', ProfileView.as_view()),
   path('', include("rest_auth.urls")),
+
   #path('profile/', ProfileView.as_view()),
 ]
