@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-7cctp+kt67&^nw3z-(@xnrx+az)c6fx@!_zfk$11^f^w!9yfms
 # SECRET_KEY = get_secret("SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -112,8 +112,15 @@ WSGI_APPLICATION = 'poli.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'polydb',
+        'USER': 'admin',
+        'PASSWORD': 'aurora1234',
+        'HOST': 'polydb.c7oolzfujcqv.ap-northeast-2.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+        }
     }
 }
 
