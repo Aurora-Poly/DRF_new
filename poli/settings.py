@@ -40,7 +40,7 @@ SECRET_KEY = 'django-insecure-7cctp+kt67&^nw3z-(@xnrx+az)c6fx@!_zfk$11^f^w!9yfms
 # SECRET_KEY = get_secret("SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['ec2-15-164-212-79.ap-northeast-2.compute.amazonaws.com','15.164.212.79']
 
 
 # Application definition
@@ -168,7 +168,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
