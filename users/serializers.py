@@ -37,7 +37,7 @@ class RegisterSerializer(serializers.ModelSerializer):
   def create(self, validate_data):
     user = User.objects.create_user(
       #username = validate_data['username'],
-      username='username',
+      username=validate_data['username'],
       email=validate_data['email']
     )
 
@@ -62,7 +62,12 @@ class LoginSerializer(serializers.Serializer):
 class ProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = Profile
-    fields = ('name','univ', 'dept', 'age', 'image')
+    fields = ('user','name','univ', 'dept', 'age', 'image')
+    lookup_field = 'user__username'
+
+    extra_kwargs = {
+      'url': {'lookup_field': 'user'}
+    }
 
 
 

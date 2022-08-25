@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, unique=True)
   name = models.CharField(default='', max_length=100)
   univ = models.CharField(default='', max_length=100)
   dept = models.CharField(default='', max_length=100)

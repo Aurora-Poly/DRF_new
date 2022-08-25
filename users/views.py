@@ -23,7 +23,10 @@ class LoginView(generics.GenericAPIView):
     return Response({"token": token.key}, status=status.HTTP_200_OK)
 
 class ProfileView(generics.RetrieveUpdateAPIView):
+  model=Profile
   queryset = Profile.objects.all()
+  lookup_field = 'user__username'
+
   serializer_class = ProfileSerializer
   #permission_classes = [IsAuthenticated, CustomReadOnly]
 

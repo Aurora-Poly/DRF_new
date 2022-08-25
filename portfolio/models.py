@@ -31,4 +31,34 @@ class Portfolio(models.Model):
 
 
   def __str__(self):
-    return f'[{self.pk}]{self.title}'
+    return f'[{self.pk}]{self.title} by {self.user}'
+
+def image_upload_path(instance, filename):
+  return 'portfolio/file/'
+
+
+class PostImage(models.Model):
+  id = models.AutoField(primary_key=True)
+  post = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='image')
+  image = models.ImageField(upload_to='portfolio/img/')
+
+  def __int__(self):
+    return self.id
+  def __str__(self):
+    return f'img: {self.pk}) {self.post}'
+
+  # class Meta:
+  #   db_table = 'post_image'
+
+class PostFile(models.Model):
+  id = models.AutoField(primary_key=True)
+  post = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='file')
+  file = models.FileField(upload_to='portfolio/file/')
+
+  def __int__(self):
+    return self.id
+  def __str__(self):
+    return f'file: {self.pk}) {self.post}'
+
+  # class Meta:
+  #   db_table = 'post_image'
