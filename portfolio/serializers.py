@@ -3,13 +3,16 @@ from rest_framework import serializers
 from portfolio.models import Portfolio, PostImage, PostFile
 from users.serializers import ProfileSerializer
 
-
 class PostImageSerializer(serializers.ModelSerializer):
-  image = serializers.ImageField(use_url=True)
-
+  # image = serializers.ImageField(use_url=True)
   class Meta:
     model = PostImage
-    fields = ['image', 'post']
+    fields = ('image', 'post')
+    lookup_field = 'post__pk'
+
+    extra_kwargs = {
+      'url': {'lookup_field': 'post'}
+    }
 
 class PostFileSerializer(serializers.ModelSerializer):
   file = serializers.FileField(use_url=True)
@@ -20,32 +23,47 @@ class PostFileSerializer(serializers.ModelSerializer):
 
 class PortfolioSerializer(serializers.ModelSerializer):
   profile = ProfileSerializer(read_only=True)
-  images = serializers.SerializerMethodField()
-  files = serializers.SerializerMethodField()
+  image = PostImageSerializer(read_only=True)
+  file = PostFileSerializer(read_only=True)
+  # image = serializers.SerializerMethodField()
+  # files = serializers.SerializerMethodField()
 
-  def get_images(self, obj):
-    image = obj.image.all()
-    return PostImageSerializer(instance=image, many=True, context=self.context).data
-
-  def get_files(self, obj):
-    file = obj.file.all()
-    return PostFileSerializer(instance=file, many=True, context=self.context).data
+  # def get_files(self, obj):
+  #   file = obj.file.all()
+  #   return PostFileSerializer(instance=file, many=True, context=self.context).data
 
   class Meta:
     model = Portfolio
-    fields = ("pk", 'profile', 'title', 'content', 'head_img', 'file_upload' ,'date','images', 'files')
+    fields = ("pk", 'profile', 'title', 'content','date', 'image', 'file' )
 
   def create(self, validated_data):
     instance = Portfolio.objects.create(**validated_data)
-    image_set = self.context['request'].FILES
     file_set = self.context['request'].FILES
+    image_set = self.context['request'].FILES
     for image_data in image_set.getlist('image'):
       PostImage.objects.create(post=instance, image=image_data)
-
     for file_data in file_set.getlist('file'):
       PostFile.objects.create(post=instance, file=file_data)
     return instance
 
+
+
+
+class PortfolioCreateSerializer(serializers.ModelSerializer):
+  image = PostImageSerializer()
+  file = PostFileSerializer()
+
+  # def get_files(self, obj):
+  #   file = obj.file.all()
+  #   return PostFileSerializer(instance=file, many=True, context=self.context).data
+
+  class Meta:
+    model = Portfolio
+    fields = ('title', 'category', 'content', 'date' , 'image', 'file')
+
+  # head_img= Base64ImageField(
+  #       max_length=None, use_url=True,
+  #   )
 # class Base64ImageField(serializers.ImageField):
 #   """
 #   A Django REST framework field for handling image-uploads through raw post data.
@@ -94,22 +112,3 @@ class PortfolioSerializer(serializers.ModelSerializer):
 #     extension = "jpg" if extension == "jpeg" else extension
 #
 #     return extension
-
-
-class PortfolioCreateSerializer(serializers.ModelSerializer):
-  images = serializers.SerializerMethodField()
-  def get_images(self, obj):
-    image = obj.image.all()
-    return PostImageSerializer(instance=image, many=True, context=self.context).data
-
-  def get_files(self, obj):
-    file = obj.file.all()
-    return PostFileSerializer(instance=file, many=True, context=self.context).data
-
-  class Meta:
-    model = Portfolio
-    fields = ('title', 'category', 'content', 'head_img', 'file_upload', 'date', 'images', 'files')
-
-  # head_img= Base64ImageField(
-  #       max_length=None, use_url=True,
-  #   )

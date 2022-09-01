@@ -50,6 +50,30 @@ class ImageViewSet(ModelViewSet):
   queryset = PostImage.objects.all()
   serializer_class = PostImageSerializer
 
+# class ImageView(generics.GenericAPIView):
+#   serializer_class = PostImageSerializer
+#
+#   def patch(self, request):
+#     postImage = Portfolio.objects.get(post=request.post)
+#     serializer = self.get_serializer(data=request.data)
+#     serializer.is_valid(raise_exception=True)
+#     data = serializer.validated_data
+#     if request.data['image']:
+#       postImage.image = request.data['image']
+#     postImage.save()
+#     return Response({"result": "ok"},
+#                     status=status.HTTP_206_PARTIAL_CONTENT)
+#
+#   def get(self, request):
+#     postImage = Portfolio.objects.get(post=request.post)
+#     serializer = self.get_serializer(postImage)
+#     return Response(serializer.data)
+
+# class ImageView(generics.RetrieveUpdateAPIView):
+#   model=Portfolio
+#   queryset = PostImage.objects.all()
+#   serializer_class = PostImageSerializer
+
 class FileViewSet(ModelViewSet):
   queryset = PostFile.objects.all()
   serializer_class = PostFileSerializer
