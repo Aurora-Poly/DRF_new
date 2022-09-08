@@ -2,10 +2,11 @@ from rest_framework import generics, status
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from .models import Profile
+from .models import Profile, ProfileImage
 from .permissions import CustomReadOnly
-from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer
+from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer, ProfileImageSerializer
 
 
 # Create your views here.
@@ -30,6 +31,22 @@ class ProfileView(generics.RetrieveUpdateAPIView):
   serializer_class = ProfileSerializer
   #permission_classes = [IsAuthenticated, CustomReadOnly]
 
+
+class ProfileImageView(generics.ListCreateAPIView):
+  model=Profile
+  queryset = ProfileImage.objects.all()
+  # lookup_field = 'user__username'
+  serializer_class = ProfileImageSerializer
+
+class ProfileImageDetailView(generics.RetrieveUpdateDestroyAPIView):
+  model=Profile
+  queryset = ProfileImage.objects.all()
+  lookup_field = 'user__username'
+  serializer_class = ProfileImageSerializer
+
+# class ProfileImageViewSet(ModelViewSet):
+#   queryset = ProfileImage.objects.all()
+#   serializer_class = ProfileImageSerializer
 
 # class ProfileView(generics.GenericAPIView):
 #   serializer_class = ProfileSerializer

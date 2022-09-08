@@ -9,6 +9,3 @@ router.register('postimage',  ImageViewSet, basename='postImage')
 router.register('postfile',  FileViewSet, basename='postFile')
 
 urlpatterns= router.urls
-# urlpatterns = [
-# path('post/<int:pk>/', ImageView.as_view()),
-# ]
