@@ -180,4 +180,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
-DEBUG=False
+DEBUG=True
