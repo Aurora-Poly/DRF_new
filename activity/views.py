@@ -25,7 +25,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
   permission_classes = [CustomReadOnly]
   pagination_class = SetPagination
   filter_backends = [DjangoFilterBackend, SearchFilter]
-  filterset_fields = ['title', 'profile__name','likes','field','profile']
+  filterset_fields = ['title','field', 'target', 'prize', 'office']
   search_fields = ['title']
   # filter_backends = [SearchFilter]
   # search_fields = ('title', 'tag', 'company', 'field', 'detail',)
@@ -49,4 +49,5 @@ def like_post(request, pk):
     activity.likes.add(request.user)
 
   return Response({'status': 'ok'})
+
 

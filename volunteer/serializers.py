@@ -5,14 +5,12 @@ from users.serializers import ProfileSerializer
 
 
 class VolunteerSerializer(serializers.ModelSerializer):
-  profile = ProfileSerializer(read_only=True)
+  # profile = ProfileSerializer(read_only=True)
   class Meta:
     model = Volunteer
-    fields = ("pk", 'profile', 'title', 'company', 'detail',
-              'location', 'applyperiod', 'actperiod')
+    fields = '__all__'
 
 class VolunteerCreateSerializer(serializers.ModelSerializer):
   class Meta:
     model = Volunteer
-    fields = ('title', 'company', 'detail',
-              'location', 'applyperiod', 'actperiod')
+    fields = '__all__'

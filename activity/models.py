@@ -1,49 +1,66 @@
-from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+#분야
+from rest_framework.authtoken.admin import User
+
 from users.models import Profile
 
+
 class Field(models.Model):
-  name=models.CharField(max_length=50, unique=True)
-  slug=models.SlugField(max_length=200, unique=True, allow_unicode=True)
+  name=models.CharField(max_length=100, unique=True)
+  slug=models.SlugField(max_length=100, unique=True, allow_unicode=True)
 
   def __str__(self):
-    return self.name
+    return f'[{self.pk}]{self.name}'
 
-class Tag(models.Model):
-  name=models.CharField(max_length=50, unique=True)
-  slug=models.SlugField(max_length=200, unique=True, allow_unicode=True)
+#참가대상
+class Target(models.Model):
+  name=models.CharField(max_length=100, unique=True)
+  slug=models.SlugField(max_length=100, unique=True, allow_unicode=True)
 
   def __str__(self):
-    return self.name
+    return f'[{self.pk}]{self.name}'
 
+#주최기관
+class Office(models.Model):
+  name=models.CharField(max_length=100, unique=True)
+  slug=models.SlugField(max_length=100, unique=True, allow_unicode=True)
+
+  def __str__(self):
+    return f'[{self.pk}]{self.name}'
+
+#상금
+class Prize(models.Model):
+  name=models.CharField(max_length=100, unique=True)
+  slug=models.SlugField(max_length=100, unique=True, allow_unicode=True)
+
+  def __str__(self):
+    return f'[{self.pk}]{self.name}'
+
+#대외활동
 class Activity(models.Model):
-  author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activities', default='1')
-  profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, default='1')
-  title = models.CharField(max_length=300, default='')
-  tag = models.ManyToManyField(Tag, blank=True) #전체태그
-  company = models.CharField(max_length=100, default='')
-  apply_period = models.DateField(null=True, blank=True)
-  field=models.ManyToManyField(Field, blank=True) #활동분야
-  actperiod = models.DateField(null=True, blank=True)
-  personnel = models.IntegerField(default=0)
-  detail = models.TextField(max_length=1000, blank=False, null=False, default='')
-  apply_url = models.CharField(max_length=300, blank=True, null=True)
-  img_url = models.CharField(max_length=300, blank=True, null=False)
-  likes = models.ManyToManyField(User, blank=True)
+  # author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='author')
+  # profile = models.ForeignKey(Profile,on_delete=models.CASCADE,blank=True,related_name='author_profile')
+  # id = models.AutoField(primary_key=True, null=False, blank=False)
+  title = models.CharField(max_length=300)
+  views = models.IntegerField(blank=True)
+  prize = models.ForeignKey(Prize, on_delete=models.CASCADE, blank=True)
+  office = models.ForeignKey(Office, on_delete=models.CASCADE, blank=True)
+  juchae = models.CharField(max_length=100, blank=True)
+  jukwan = models.CharField(max_length=100, blank=True)
+  field = models.ManyToManyField(Field, blank=True)
+  target = models. ManyToManyField(Target, blank=True)
+  apply_period = models.CharField(max_length=200, blank=True)
+  prize_1st = models.CharField(max_length=200, blank=True)
+  apply_url = models.CharField(max_length=200, blank=True)
+  image_url = models.CharField(max_length=200, blank=True)
 
-    # 대외활동 이름 name
-    # 관련태그 tag
-    # 주최주관 company
-    # 지원기간 applyperiod
-    # 모집분야 field
-    # 활동기간 actperiod
-    # 모집인원 personnel
-    # 상세설명 detail
-    # 지원url apply-url
-    # 이미지url img-url
+  db_table = 'volunteer'
+  #좋아요
+  likes = models.ManyToManyField(User, blank=True, related_name='like_posts')
+  def like_count(self):
+        return self.likes.count()
 
   def __str__(self):
-    return f'[{self.pk}]{self.title} by {self.author}'
+    return f'[{self.pk}]{self.title}'
 
