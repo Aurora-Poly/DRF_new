@@ -24,8 +24,9 @@ class SetPagination(PageNumberPagination):
 
 class PortfolioViewSet(viewsets.ModelViewSet):
   # permission_classes = [IsAuthenticated, IsOwner]
-  filter_backends = [DjangoFilterBackend]
-  filterset_fields = ['title']
+  filter_backends = [DjangoFilterBackend, SearchFilter]
+  search_fields = ['title']
+  # filterset_fields = ['title']
   pagination_class = SetPagination
 
   def get_queryset(self):
