@@ -6,6 +6,7 @@ from rest_framework import serializers, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
+from activity.serializers import ActivitySerializer
 from users.models import Profile, ProfileImage
 
 
@@ -24,7 +25,7 @@ class RegisterSerializer(serializers.ModelSerializer):
   password2 = serializers.CharField(write_only=True, required= True)
 
   class Meta:
-    model = User=User
+    model = User
     fields = ('username', 'password', 'password2', 'email')
 
   def validate(self, data):
@@ -59,6 +60,11 @@ class LoginSerializer(serializers.Serializer):
       {"error": "Unable to log in with provided credentials"}
     )
 
+
+
+
+
+
 class ProfileImageSerializer(serializers.ModelSerializer):
   # image = serializers.ImageField(use_url=True)
   class Meta:
@@ -76,12 +82,18 @@ class ProfileSerializer(serializers.ModelSerializer):
   class Meta:
 
     model = Profile
-    fields = ('user','univ', 'dept', 'age', 'image')
+    fields = ['user','univ', 'dept', 'age', 'image']
     lookup_field = 'user__username'
 
     extra_kwargs = {
       'url': {'lookup_field': 'user'}
     }
+
+class UserSerializer(serializers.ModelSerializer):
+  profile = ProfileSerializer(read_only=True)
+  class Meta:
+    model = User()
+    fields = ['id', 'username','email', 'profile']
 
 
 

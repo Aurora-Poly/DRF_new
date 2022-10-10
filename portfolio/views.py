@@ -29,6 +29,13 @@ class PortfolioViewSet(viewsets.ModelViewSet):
   # filterset_fields = ['title']
   pagination_class = SetPagination
 
+  # def get(self, request, format=None):
+  #   print(request.user)
+  #   print(request.auth)
+  #   serializer=PortfolioSerializer
+  #   return Response(serializer.data)
+
+
   def get_queryset(self):
     user = self.request.user
     if user.is_authenticated:
