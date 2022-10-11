@@ -7,3 +7,14 @@ class CustomReadOnly(permissions.BasePermission):
       return True
     return obj.user == request.user
 
+class IsOwner(permissions.BasePermission):
+  def has_object_permission(self, request, view, obj):
+    if request.user.is_authenticated:
+      if request.user.username != obj.user.username:
+        print(request.user)
+        return False
+      else:
+        return True
+    else:
+      return False
+

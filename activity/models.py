@@ -55,7 +55,6 @@ class Activity(models.Model):
   apply_url = models.CharField(max_length=200, blank=True)
   image_url = models.CharField(max_length=200, blank=True)
 
-  db_table = 'volunteer'
   #좋아요
   likes = models.ManyToManyField(User, blank=True, related_name='like_posts')
   def like_count(self):

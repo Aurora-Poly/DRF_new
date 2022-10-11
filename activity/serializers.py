@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from activity.models import Activity
-from users.serializers import ProfileSerializer
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -14,3 +13,11 @@ class ActivityCreateSerializer(serializers.ModelSerializer):
   class Meta:
     model = Activity
     fields = '__all__'
+
+class LikeListSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Activity
+    fields = ['id', 'likes']
+    extra_kwargs = {
+      'url': {'lookup_field': 'user__username'}
+    }
