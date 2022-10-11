@@ -5,16 +5,12 @@ from users.serializers import ProfileSerializer
 
 
 class ActivitySerializer(serializers.ModelSerializer):
-  profile = ProfileSerializer(read_only=True)
+  # profile = ProfileSerializer(read_only=True)
   class Meta:
     model = Activity
-    fields = ("pk", 'profile','title', 'tag', 'company', 'apply_period', 'field'
-              ,'field', 'actperiod', 'personnel', 'detail', 'apply_url'
-              , 'img_url', 'likes')
+    fields = '__all__'
 
 class ActivityCreateSerializer(serializers.ModelSerializer):
   class Meta:
     model = Activity
-    fields = ('title', 'tag', 'company', 'apply_period', 'field'
-              ,'field', 'actperiod', 'personnel', 'detail', 'apply_url'
-              , 'img_url')
+    fields = '__all__'

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os,json
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.exceptions import ImproperlyConfigured
 
@@ -40,8 +41,7 @@ SECRET_KEY = 'django-insecure-7cctp+kt67&^nw3z-(@xnrx+az)c6fx@!_zfk$11^f^w!9yfms
 # SECRET_KEY = get_secret("SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-15-164-212-79.ap-northeast-2.compute.amazonaws.com','15.164.212.79']
-
+ALLOWED_HOSTS = ['ec2-15-164-212-79.ap-northeast-2.compute.amazonaws.com','15.164.212.79','localhost' , '127.0.0.1']
 
 # Application definition
 
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -108,10 +109,17 @@ WSGI_APPLICATION = 'poli.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'polydb',
+        'NAME': 'poly_test',
         'USER': 'admin',
         'PASSWORD': 'aurora1234',
         'HOST': 'polydb.c7oolzfujcqv.ap-northeast-2.rds.amazonaws.com',

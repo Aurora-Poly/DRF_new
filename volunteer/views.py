@@ -20,8 +20,8 @@ class VolunteerViewSet(viewsets.ModelViewSet):
   serializer_class = VolunteerSerializer
   pagination_class = SetPagination
   filter_backends = [DjangoFilterBackend, SearchFilter]
-  filterset_fields = ['title', 'profile__name', 'profile']
-  search_fields = ['title']
+  filterset_fields = ['type', 'area', 'field', 'meet' ]
+  search_fields = ['title', 'place', 'office']
 
   # permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 

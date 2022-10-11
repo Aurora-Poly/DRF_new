@@ -7,12 +7,11 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, unique=True)
   name = models.CharField(default='', max_length=100)
   univ = models.CharField(default='', max_length=100)
   dept = models.CharField(default='', max_length=100)
   age = models.IntegerField(default=0)
-  image = models.ImageField(upload_to='profile/', null=True, blank=True)
 
   def __str__(self):
     return f'[{self.pk}]{self.user}'
@@ -25,3 +24,14 @@ def create_user_profile(sender, instance, created, **kwargs):
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):
 #     instance.profile.save()
+class ProfileImage(models.Model):
+  # id = models.AutoField(primary_key=True)
+  # post = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='image')
+  # image = models.ImageField(upload_to='portfolio/img/')
+  user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile_image', primary_key=True, unique=True)
+  image = models.ImageField(upload_to='profile/img/', null=True, blank=True)
+
+  def __int__(self):
+    return self.id
+  def __str__(self):
+    return f'img: {self.pk}) {self.user}'
