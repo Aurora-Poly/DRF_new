@@ -40,9 +40,16 @@ def find_sim_num(title_index):
 
   # 상위 10개 영화의 인덱스
   final_index = temp.index.values[:1]
+  # print('final_index', final_index)
+  # print(movie['id'].iat[final_index[0]])
+  # print(movie[['id']].iloc[final_index])
 
   # return movie[['id', 'title', 'field', 'all', 'similarity_all']].iloc[final_index]
 
-  return movie[['id', 'title', 'juchae', 'jukwan', 'apply_period',
-                'prize_1st', 'apply_url', 'image_url', 'prize', 'office', 'field', 'target']].iloc[final_index]
+  # return movie[['id', 'title', 'juchae', 'jukwan', 'apply_period',
+  #               'prize_1st', 'apply_url', 'image_url', 'prize', 'office', 'field', 'target']].iloc[final_index]
+  # return movie[['id']].iloc[final_index[0]]
+  return movie['id'].iat[final_index[0]]
+
+
 

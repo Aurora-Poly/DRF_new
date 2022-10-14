@@ -15,7 +15,7 @@ from rest_framework.viewsets import ModelViewSet
 from activity.models import Activity
 from activity.permissions import CustomReadOnly
 from activity.reml import find_sim_num
-from activity.serializers import ActivitySerializer, ActivityCreateSerializer, LikeListSerializer
+from activity.serializers import ActivitySerializer, ActivityCreateSerializer, LikeListSerializer, ActivityRecSerializer
 from users.models import Profile
 
 class SetPagination(PageNumberPagination):
@@ -67,26 +67,53 @@ def like_list(request, pk):
     serializer = ActivitySerializer(activity)
     data.append(serializer.data)
 
+class LikeListView(generics.ListAPIView):
+  serializer_class = ActivitySerializer
+  # lookup_field = 'user__username'
+  pagination_class = SetPagination
+  def get_queryset(self):
+    user = self.request.user
+    if user.is_authenticated:
+      return Activity.objects.filter(likes=user)
+    else:
+      return Activity.objects.none()
 
-  return Response(data)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def recommend(request, pk):
-  pagination = SetPagination
-  my = get_object_or_404(User, pk=pk)
-  lookup_field = 'user__username'
-  data = []
-  # data=Activity.objects.filter(likes=request.user)
-  # print(data)
-  for activity in Activity.objects.filter(likes=request.user).order_by('likes'):
-    raw_movies = find_sim_num(activity.pk)
-    recommendation_dict = raw_movies
-    print('activit',activity)
-    print(recommendation_dict)
-    data.insert(0, recommendation_dict)
-  print(data)
-  return Response(data)
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def recommend(request, pk):
+#   pagination = SetPagination
+#   my = get_object_or_404(User, pk=pk)
+#   lookup_field = 'user__username'
+#   data = []
+#   # data=Activity.objects.filter(likes=request.user)
+#   # print(data)
+#   for activity in Activity.objects.filter(likes=request.user).order_by('likes'):
+#     raw_movies = find_sim_num(activity.pk)
+#     recommendation_dict = raw_movies
+#     data.insert(0, recommendation_dict)
+#   print(data)
+#   return Response(data)
+
+class RecommendView(generics.ListAPIView):
+  serializer_class = ActivitySerializer
+  # pagination_class = SetPagination
+  def get_queryset(self):
+    user = self.request.user
+    data = []
+    if user.is_authenticated:
+      for activity in Activity.objects.filter(likes=user).order_by():
+
+        raw_movies = find_sim_num(activity.id)
+        recommendation_dict = raw_movies
+        data.insert(0, recommendation_dict)
+        print("activity: ",activity.id," data: ",recommendation_dict)
+      print('data:' ,data[:3])
+      return Activity.objects.filter(id__in=data[:3]).order_by()
+      # return Activity.objects.filter(id__in=["1", "2", "3"])
+    else:
+      return Activity.objects.filter(id__in=["3","2","5"])
+
 
 
