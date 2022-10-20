@@ -27,7 +27,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
   permission_classes = [CustomReadOnly]
   pagination_class = SetPagination
   filter_backends = [DjangoFilterBackend, SearchFilter]
-  filterset_fields = ['title','field', 'target', 'prize', 'office', 'likes']
+  filterset_fields = ['field', 'target', 'prize', 'office', 'likes']
   search_fields = ['title']
 
   def get_serializer_class(self):
