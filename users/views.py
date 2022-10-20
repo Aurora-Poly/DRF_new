@@ -36,14 +36,12 @@ class ProfileView(generics.RetrieveUpdateAPIView):
       return Profile.objects.filter(user=user).all()
     else:
       return Profile.objects.all()
-      # return Portfolio.objects.none()
-
+    
 
 
 class ProfileImageView(generics.ListCreateAPIView):
   model=Profile
   queryset = ProfileImage.objects.all()
-  # lookup_field = 'user__username'
   serializer_class = ProfileImageSerializer
 
 
@@ -61,31 +59,3 @@ class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
   permission_classes = [IsAuthenticated, CustomReadOnly]
-
-
-
-# class ProfileImageViewSet(ModelViewSet):
-#   queryset = ProfileImage.objects.all()
-#   serializer_class = ProfileImageSerializer
-
-# class ProfileView(generics.GenericAPIView):
-#   serializer_class = ProfileSerializer
-#
-#   def patch(self, request):
-#     profile = Profile.objects.get(user=request.user)
-#     serializer = self.get_serializer(data=request.data)
-#     serializer.is_valid(raise_exception=True)
-#     data = serializer.validated_data
-#     profile.univ = data['univ']
-#     profile.dept = data['dept']
-#     profile.age = data['age']
-#     if request.data['image']:
-#       profile.image = request.data['image']
-#     profile.save()
-#     return Response({"result": "ok"},
-#                     status=status.HTTP_206_PARTIAL_CONTENT)
-#
-#   def get(self, request):
-#     profile = Profile.objects.get(user=request.user)
-#     serializer = self.get_serializer(profile)
-#     return Response(serializer.data)

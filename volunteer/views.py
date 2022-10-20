@@ -23,7 +23,5 @@ class VolunteerViewSet(viewsets.ModelViewSet):
   filterset_fields = ['type', 'area', 'field', 'meet' ]
   search_fields = ['title', 'place', 'office']
 
-  # permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
   def perform_create(self, serializer):
       serializer.save(author=self.request.user)

@@ -29,7 +29,6 @@ class Contest(models.Model):
   tag = models.CharField(max_length=300)
   company = models.CharField(max_length=100)
   detail = models.TextField()
-  # qualification = models.CharField(max_length=300)
   qualification = models.ManyToManyField(Qualification, blank=True) #자격요건
   award = models.ForeignKey(Award, null=True, on_delete=models.CASCADE, blank=True, default=None)
   field = models.ManyToManyField(Field, blank=True) #공모분야

@@ -25,7 +25,6 @@ class ResumeViewSet(viewsets.ModelViewSet):
   search_fields = ['title']
   pagination_class = SetPagination
   permission_classes = [IsAuthenticated, IsOwner]
-  # queryset = Resume.objects.all()
   def get_queryset(self):
     user = self.request.user
     if user.is_authenticated:
@@ -43,13 +42,5 @@ class ResumeViewSet(viewsets.ModelViewSet):
     profile = Profile.objects.get(user=self.request.user)
     serializer.save(user=self.request.user, profile=profile)
 
-# class PortfolioList(generics.ListAPIView):
-#   serializers_class = PortfolioSerializer
-#   def get_queryset(self):
-#     user = self.request.user
-#     if user.is_authenticated:
-#       return Portfolio.objects.filter(portfolio=user)
-#     else:
-#       return Portfolio.objects.none()
 
 

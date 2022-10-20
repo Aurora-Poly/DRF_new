@@ -11,7 +11,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
 from activity.models import Activity
 from activity.permissions import CustomReadOnly
 from activity.reml import find_sim_num
@@ -30,8 +29,6 @@ class ActivityViewSet(viewsets.ModelViewSet):
   filter_backends = [DjangoFilterBackend, SearchFilter]
   filterset_fields = ['title','field', 'target', 'prize', 'office', 'likes']
   search_fields = ['title']
-  # filter_backends = [SearchFilter]
-  # search_fields = ('title', 'tag', 'company', 'field', 'detail',)
 
   def get_serializer_class(self):
     if self.action == 'list' or 'retrieve':
@@ -60,10 +57,7 @@ def like_list(request, pk):
   my = get_object_or_404(User, pk=pk)
   lookup_field = 'user__username'
   data=[]
-  # data=Activity.objects.filter(likes=request.user)
-  # print(data)
   for activity in Activity.objects.filter(likes=request.user).order_by('-id'):
-    # serializer=LikeListSerializer(activity)
     serializer = ActivitySerializer(activity)
     data.append(serializer.data)
 
@@ -79,23 +73,6 @@ class LikeListView(generics.ListAPIView):
       return Activity.objects.none()
 
 
-
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def recommend(request, pk):
-#   pagination = SetPagination
-#   my = get_object_or_404(User, pk=pk)
-#   lookup_field = 'user__username'
-#   data = []
-#   # data=Activity.objects.filter(likes=request.user)
-#   # print(data)
-#   for activity in Activity.objects.filter(likes=request.user).order_by('likes'):
-#     raw_movies = find_sim_num(activity.pk)
-#     recommendation_dict = raw_movies
-#     data.insert(0, recommendation_dict)
-#   print(data)
-#   return Response(data)
-
 class RecommendView(generics.ListAPIView):
   serializer_class = ActivitySerializer
   # pagination_class = SetPagination
@@ -105,8 +82,8 @@ class RecommendView(generics.ListAPIView):
     if user.is_authenticated:
       for activity in Activity.objects.filter(likes=user).order_by():
 
-        raw_movies = find_sim_num(activity.id)
-        recommendation_dict = raw_movies
+        raw_recos = find_sim_num(activity.id)
+        recommendation_dict = raw_recos
         data.insert(0, recommendation_dict)
         print("activity: ",activity.id," data: ",recommendation_dict)
       print('data:' ,data[:3])

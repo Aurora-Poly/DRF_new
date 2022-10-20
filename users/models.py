@@ -21,13 +21,7 @@ def create_user_profile(sender, instance, created, **kwargs):
   if created:
     Profile.objects.create(user=instance)
 
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
 class ProfileImage(models.Model):
-  # id = models.AutoField(primary_key=True)
-  # post = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='image')
-  # image = models.ImageField(upload_to='portfolio/img/')
   user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile_image', primary_key=True, unique=True)
   image = models.ImageField(upload_to='profile/img/', null=True, blank=True)
 

@@ -26,12 +26,6 @@ class PortfolioSerializer(serializers.ModelSerializer):
   profile = ProfileSerializer(read_only=True)
   image = PostImageSerializer(read_only=True)
   file = PostFileSerializer(read_only=True)
-  # image = serializers.SerializerMethodField()
-  # files = serializers.SerializerMethodField()
-
-  # def get_files(self, obj):
-  #   file = obj.file.all()
-  #   return PostFileSerializer(instance=file, many=True, context=self.context).data
 
   class Meta:
     model = Portfolio
@@ -54,10 +48,6 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class PortfolioCreateSerializer(serializers.ModelSerializer):
   image = PostImageSerializer(read_only=True)
   file = PostFileSerializer(read_only=True)
-
-  # def get_files(self, obj):
-  #   file = obj.file.all()
-  #   return PostFileSerializer(instance=file, many=True, context=self.context).data
 
   class Meta:
     model = Portfolio

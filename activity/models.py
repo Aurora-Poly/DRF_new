@@ -1,11 +1,8 @@
 from django.db import models
-
-#분야
 from rest_framework.authtoken.admin import User
-
 from users.models import Profile
 
-
+#분야
 class Field(models.Model):
   name=models.CharField(max_length=100, unique=True)
   slug=models.SlugField(max_length=100, unique=True, allow_unicode=True)
@@ -39,9 +36,6 @@ class Prize(models.Model):
 
 #대외활동
 class Activity(models.Model):
-  # author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='author')
-  # profile = models.ForeignKey(Profile,on_delete=models.CASCADE,blank=True,related_name='author_profile')
-  # id = models.AutoField(primary_key=True, null=False, blank=False)
   title = models.CharField(max_length=300)
   views = models.IntegerField(blank=True)
   prize = models.ForeignKey(Prize, on_delete=models.CASCADE, blank=True)

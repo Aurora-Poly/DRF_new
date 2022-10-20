@@ -26,15 +26,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
   # permission_classes = [IsAuthenticated, IsOwner]
   filter_backends = [DjangoFilterBackend, SearchFilter]
   search_fields = ['title']
-  # filterset_fields = ['title']
   pagination_class = SetPagination
-
-  # def get(self, request, format=None):
-  #   print(request.user)
-  #   print(request.auth)
-  #   serializer=PortfolioSerializer
-  #   return Response(serializer.data)
-
 
   def get_queryset(self):
     user = self.request.user
@@ -42,7 +34,6 @@ class PortfolioViewSet(viewsets.ModelViewSet):
       return Portfolio.objects.filter(user=user).order_by('-id')
     else:
       return Portfolio.objects.all()
-      # return Portfolio.objects.none()
 
   def get_serializer_class(self):
     if self.action == 'list' or 'retrieve':
@@ -50,7 +41,6 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     return PortfolioCreateSerializer
 
   def perform_create(self, serializer):
-    #profile = Profile.objects.get(user=self.request.user)
     profile = Profile.objects.all()
     serializer.save(user=self.request.user, profile=self.request.user.profile)
 
@@ -58,41 +48,9 @@ class ImageViewSet(ModelViewSet):
   queryset = PostImage.objects.all()
   serializer_class = PostImageSerializer
 
-# class ImageView(generics.GenericAPIView):
-#   serializer_class = PostImageSerializer
-#
-#   def patch(self, request):
-#     postImage = Portfolio.objects.get(post=request.post)
-#     serializer = self.get_serializer(data=request.data)
-#     serializer.is_valid(raise_exception=True)
-#     data = serializer.validated_data
-#     if request.data['image']:
-#       postImage.image = request.data['image']
-#     postImage.save()
-#     return Response({"result": "ok"},
-#                     status=status.HTTP_206_PARTIAL_CONTENT)
-#
-#   def get(self, request):
-#     postImage = Portfolio.objects.get(post=request.post)
-#     serializer = self.get_serializer(postImage)
-#     return Response(serializer.data)
-
-# class ImageView(generics.RetrieveUpdateAPIView):
-#   model=Portfolio
-#   queryset = PostImage.objects.all()
-#   serializer_class = PostImageSerializer
-
 class FileViewSet(ModelViewSet):
   queryset = PostFile.objects.all()
   serializer_class = PostFileSerializer
 
-# class PortfolioList(generics.ListAPIView):
-#   serializers_class = PortfolioSerializer
-#   def get_queryset(self):
-#     user = self.request.user
-#     if user.is_authenticated:
-#       return Portfolio.objects.filter(portfolio=user)
-#     else:
-#       return Portfolio.objects.none()
 
 
