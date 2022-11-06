@@ -61,10 +61,6 @@ class LoginSerializer(serializers.Serializer):
     )
 
 
-
-
-
-
 class ProfileImageSerializer(serializers.ModelSerializer):
   # image = serializers.ImageField(use_url=True)
   class Meta:
@@ -95,7 +91,11 @@ class UserSerializer(serializers.ModelSerializer):
     model = User()
     fields = ['id', 'username','email', 'profile']
 
+#아이디 중복 검사
+class UsernameUniqueCheckSerializer(serializers.ModelSerializer):
+  user = serializers.CharField(required=True, min_length=3, max_length=30,
+  validators=[UniqueValidator(queryset=Profile.objects.all())])
 
-
-
-
+  class Meta:
+    model = User
+    fields = ['username','user']

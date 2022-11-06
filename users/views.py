@@ -7,8 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from activity.models import Activity
 from .models import Profile, ProfileImage
 from .permissions import CustomReadOnly, IsOwner
-from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer, ProfileImageSerializer, UserSerializer
-
+from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer, ProfileImageSerializer, UserSerializer, UsernameUniqueCheckSerializer
 
 # Create your views here.
 class RegisterView(generics.CreateAPIView):
@@ -54,8 +53,24 @@ class ProfileImageDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
   permission_classes = [IsAuthenticated, CustomReadOnly]
+
+
+class UsernameUniqueCheck(generics.CreateAPIView):
+  queryset = User.objects.all()
+  serializer_class = UsernameUniqueCheckSerializer
+  lookup_field = 'uniquecheck__username'
+
+  def post(self, request, format = None):
+    serializer = self.get_serializer(data=request.data, context={'request':request})
+    if serializer.is_valid():
+      return Response(data={'detail':['You can use this ID']}, status=status.HTTP_200_OK)
+    else:
+      detail = dict()
+      detail['detail'] = serializer.errors['username']
+      return Response(data={'detail' : ['You cannot use this ID']}, status=status.HTTP_400_BAD_REQUEST)
+
+            
