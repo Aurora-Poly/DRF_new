@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import warnings
 warnings.filterwarnings("ignore")
 
-reco = pd.read_csv('activity/full.csv')
+reco = pd.read_csv('activity/re_act1031.csv')
 count_v = CountVectorizer(ngram_range=(1,3))
 all_v = count_v.fit_transform(reco['all'])
 all_csine = cosine_similarity(all_v, all_v)
@@ -24,7 +24,8 @@ def find_sim_num(title_index):
   temp = reco.sort_values(by='similarity_all', ascending=False)
   temp = temp[temp.index.values != title_index]
   final_index = temp.index.values[:1]
-  return reco['id'].iat[final_index[0]]
+  # return reco['id'].iat[final_index[0]]
+  return reco['act_id'].iat[final_index[0]]
 
 
 

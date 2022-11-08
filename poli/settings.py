@@ -119,7 +119,7 @@ WSGI_APPLICATION = 'poli.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'poly_test',
+        'NAME': 'aurora_poly',
         'USER': 'admin',
         'PASSWORD': 'aurora1234',
         'HOST': 'polydb.c7oolzfujcqv.ap-northeast-2.rds.amazonaws.com',

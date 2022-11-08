@@ -1,4 +1,4 @@
-import null as null
+
 from rest_framework import serializers
 
 from portfolio.models import Portfolio, PostImage, PostFile

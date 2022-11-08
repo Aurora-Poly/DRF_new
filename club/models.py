@@ -11,6 +11,9 @@ class Club(models.Model):
   personnel = models.IntegerField()
   content = models.TextField()
   date = models.DateField()
+  contact = models.CharField(max_length=50, blank=True, null=True)
+  apply_email = models.EmailField(blank=True, null=True)
+
 
   def __str__(self):
     return f'[{self.pk}]{self.title} by {self.author}'
