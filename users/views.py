@@ -42,6 +42,13 @@ class ProfileImageView(generics.ListCreateAPIView):
   model=Profile
   queryset = ProfileImage.objects.all()
   serializer_class = ProfileImageSerializer
+  permission_classes = [IsAuthenticated, IsOwner]
+  def get_queryset(self):
+    user = self.request.user
+    if user.is_authenticated:
+      return ProfileImage.objects.filter(user=user).all()
+    else:
+      return ProfileImage.objects.none()
 
 
 
@@ -51,6 +58,14 @@ class ProfileImageDetailView(generics.RetrieveUpdateDestroyAPIView):
   queryset = ProfileImage.objects.all()
   lookup_field = 'user__username'
   serializer_class = ProfileImageSerializer
+  permission_classes = [IsAuthenticated, IsOwner]
+
+  def get_queryset(self):
+    user = self.request.user
+    if user.is_authenticated:
+      return ProfileImage.objects.filter(user=user).all()
+    else:
+      return ProfileImage.objects.all()
 
 
 
