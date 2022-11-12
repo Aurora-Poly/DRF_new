@@ -47,6 +47,7 @@ class ProfileImageView(generics.ListCreateAPIView):
 
 class ProfileImageDetailView(generics.RetrieveUpdateDestroyAPIView):
   model=Profile
+
   queryset = ProfileImage.objects.all()
   lookup_field = 'user__username'
   serializer_class = ProfileImageSerializer

@@ -81,12 +81,13 @@ class RecommendView(generics.ListAPIView):
     data = []
     if user.is_authenticated:
       for activity in Activity.objects.filter(likes=user).order_by():
-
+        print(activity.id, "id")
         raw_recos = find_sim_num(activity.id)
         recommendation_dict = raw_recos
         data.insert(0, recommendation_dict)
         print("activity: ",activity.id," data: ",recommendation_dict)
       print('data:' ,data[:3])
+
       return Activity.objects.filter(id__in=data[:3]).order_by()
       # return Activity.objects.filter(id__in=["1", "2", "3"])
     else:

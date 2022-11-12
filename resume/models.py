@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from users.models import Profile
@@ -9,5 +11,5 @@ class Resume(models.Model):
 
   title = models.CharField(max_length=100) #제목
   file_upload = models.FileField(upload_to='resume/file/', blank=True) #파일
-  date = models.DateField() #날짜
+  date = models.DateField(blank=True, default=datetime.now) #날짜
   comments = models.TextField() #코멘트

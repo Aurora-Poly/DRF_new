@@ -8,10 +8,10 @@ class ClubSerializer(serializers.ModelSerializer):
   profile = ProfileSerializer(read_only=True)
   class Meta:
     model = Club
-    fields = ("pk", 'profile','title', 'personnel', 'content', 'date')
+    fields = ("pk", 'profile','title', 'personnel', 'content', 'date', 'contact', 'apply_email')
 
 class ClubCreateSerializer(serializers.ModelSerializer):
   class Meta:
     model = Club
 
-    fields = ('title', 'personnel', 'content', 'date')
+    fields = ('title', 'personnel', 'content', 'date', 'contact', 'apply_email')
