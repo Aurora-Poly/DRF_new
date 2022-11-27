@@ -25,13 +25,13 @@ class ResumeViewSet(viewsets.ModelViewSet):
   filter_backends = [SearchFilter]
   search_fields = ['title']
   pagination_class = SetPagination
-  # permission_classes = [IsAuthenticated, IsOwner]
+  permission_classes = [IsAuthenticated, IsOwner]
   def get_queryset(self):
     user = self.request.user
     if user.is_authenticated:
       return Resume.objects.filter(user=user).order_by('-pk')
     else:
-      return Resume.objects.all().order_by('-pk')
+      return Resume.objects.none()
 
 
   def get_serializer_class(self):

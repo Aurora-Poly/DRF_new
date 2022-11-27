@@ -23,7 +23,7 @@ class SetPagination(PageNumberPagination):
   max_page_size = 100
 
 class PortfolioViewSet(viewsets.ModelViewSet):
-  # permission_classes = [IsAuthenticated, IsOwner]
+  permission_classes = [IsAuthenticated, IsOwner]
   filter_backends = [DjangoFilterBackend, SearchFilter]
   search_fields = ['title']
   pagination_class = SetPagination
@@ -33,7 +33,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     if user.is_authenticated:
       return Portfolio.objects.filter(user=user).order_by('-id')
     else:
-      return Portfolio.objects.all()
+      return Portfolio.objects.none()
 
   def get_serializer_class(self):
     if self.action == 'list' or 'retrieve':
