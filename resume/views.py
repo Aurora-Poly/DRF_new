@@ -9,10 +9,11 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from resume.models import Resume
+from resume.models import Resume, ResumeFile
 from resume.permissions import IsOwner
-from resume.serializers import ResumeSerializer, ResumeCreateSerializer
+from resume.serializers import ResumeSerializer, ResumeCreateSerializer, ResumeFileSerializer
 from users.models import Profile
 
 class SetPagination(PageNumberPagination):
@@ -24,13 +25,13 @@ class ResumeViewSet(viewsets.ModelViewSet):
   filter_backends = [SearchFilter]
   search_fields = ['title']
   pagination_class = SetPagination
-  permission_classes = [IsAuthenticated, IsOwner]
+  # permission_classes = [IsAuthenticated, IsOwner]
   def get_queryset(self):
     user = self.request.user
     if user.is_authenticated:
       return Resume.objects.filter(user=user).order_by('-pk')
     else:
-      return Resume.objects.none()
+      return Resume.objects.all().order_by('-pk')
 
 
   def get_serializer_class(self):
@@ -42,5 +43,7 @@ class ResumeViewSet(viewsets.ModelViewSet):
     profile = Profile.objects.get(user=self.request.user)
     serializer.save(user=self.request.user, profile=profile)
 
-
+class ResumeFileViewSet(ModelViewSet):
+  queryset = ResumeFile.objects.all()
+  serializer_class = ResumeFileSerializer
 

@@ -59,7 +59,7 @@ class PortfolioCreateSerializer(serializers.ModelSerializer):
     image_set = self.context['request'].FILES
 
     for image_data in image_set.getlist('image'):
-      PostImage.objects.create(post=instance, image=null)
+      PostImage.objects.create(post=instance, image=image_data)
     for file_data in file_set.getlist('file'):
       PostFile.objects.create(post=instance, file=file_data)
     return instance
